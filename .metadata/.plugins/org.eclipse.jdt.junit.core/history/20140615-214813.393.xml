@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="TestaArvore" project="metci" tests="5" started="5" failures="4" errors="1" ignored="0">
+  <testsuite name="btree.TestaArvore" time="0.001">
+    <testcase name="testBtreeInsGrau3" classname="btree.TestaArvore" time="0.001">
+      <failure>
+        <expected>P[ 10 ] </expected>
+        <actual>btree.BTreeImpl@25754daa</actual>junit.framework.ComparisonFailure: expected:&lt;[P[ 10 ] ]&gt; but was:&lt;[btree.BTreeImpl@25754daa]&gt;&#13;
+	at junit.framework.Assert.assertEquals(Assert.java:100)&#13;
+	at junit.framework.Assert.assertEquals(Assert.java:107)&#13;
+	at junit.framework.TestCase.assertEquals(TestCase.java:269)&#13;
+	at btree.TestaArvore.testBtreeInsGrau3(TestaArvore.java:33)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at junit.framework.TestCase.runTest(TestCase.java:176)&#13;
+	at junit.framework.TestCase.runBare(TestCase.java:141)&#13;
+	at junit.framework.TestResult$1.protect(TestResult.java:122)&#13;
+	at junit.framework.TestResult.runProtected(TestResult.java:142)&#13;
+	at junit.framework.TestResult.run(TestResult.java:125)&#13;
+	at junit.framework.TestCase.run(TestCase.java:129)&#13;
+	at junit.framework.TestSuite.runTest(TestSuite.java:255)&#13;
+	at junit.framework.TestSuite.run(TestSuite.java:250)&#13;
+	at org.eclipse.jdt.internal.junit.runner.junit3.JUnit3TestReference.run(JUnit3TestReference.java:131)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)&#13;
+&#13;
+</failure>
+    </testcase>
+    <testcase name="testBtreeInsGrau6" classname="btree.TestaArvore" time="0.0">
+      <failure>
+        <expected>P[ 10 ] </expected>
+        <actual>btree.BTreeImpl@2db1d931</actual>junit.framework.ComparisonFailure: expected:&lt;[P[ 10 ] ]&gt; but was:&lt;[btree.BTreeImpl@2db1d931]&gt;&#13;
+	at junit.framework.Assert.assertEquals(Assert.java:100)&#13;
+	at junit.framework.Assert.assertEquals(Assert.java:107)&#13;
+	at junit.framework.TestCase.assertEquals(TestCase.java:269)&#13;
+	at btree.TestaArvore.testBtreeInsGrau6(TestaArvore.java:107)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at junit.framework.TestCase.runTest(TestCase.java:176)&#13;
+	at junit.framework.TestCase.runBare(TestCase.java:141)&#13;
+	at junit.framework.TestResult$1.protect(TestResult.java:122)&#13;
+	at junit.framework.TestResult.runProtected(TestResult.java:142)&#13;
+	at junit.framework.TestResult.run(TestResult.java:125)&#13;
+	at junit.framework.TestCase.run(TestCase.java:129)&#13;
+	at junit.framework.TestSuite.runTest(TestSuite.java:255)&#13;
+	at junit.framework.TestSuite.run(TestSuite.java:250)&#13;
+	at org.eclipse.jdt.internal.junit.runner.junit3.JUnit3TestReference.run(JUnit3TestReference.java:131)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)&#13;
+&#13;
+</failure>
+    </testcase>
+    <testcase name="testRemBtree2" classname="btree.TestaArvore" time="0.0">
+      <failure>
+        <expected>P[ 4 10 SP[ 2 SP[ 0 1 ] SP[ 3 ] ] SP[ 7 SP[ 6 ] SP[ 9 ] ] SP[ 12 SP[ 11 ] SP[ 14 15 16 ] ] ] </expected>
+        <actual>btree.BTreeImpl@749b46a8</actual>junit.framework.ComparisonFailure: expected:&lt;[P[ 4 10 SP[ 2 SP[ 0 1 ] SP[ 3 ] ] SP[ 7 SP[ 6 ] SP[ 9 ] ] SP[ 12 SP[ 11 ] SP[ 14 15 16 ] ] ] ]&gt; but was:&lt;[btree.BTreeImpl@749b46a8]&gt;&#13;
+	at junit.framework.Assert.assertEquals(Assert.java:100)&#13;
+	at junit.framework.Assert.assertEquals(Assert.java:107)&#13;
+	at junit.framework.TestCase.assertEquals(TestCase.java:269)&#13;
+	at btree.TestaArvore.testRemBtree2(TestaArvore.java:216)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at junit.framework.TestCase.runTest(TestCase.java:176)&#13;
+	at junit.framework.TestCase.runBare(TestCase.java:141)&#13;
+	at junit.framework.TestResult$1.protect(TestResult.java:122)&#13;
+	at junit.framework.TestResult.runProtected(TestResult.java:142)&#13;
+	at junit.framework.TestResult.run(TestResult.java:125)&#13;
+	at junit.framework.TestCase.run(TestCase.java:129)&#13;
+	at junit.framework.TestSuite.runTest(TestSuite.java:255)&#13;
+	at junit.framework.TestSuite.run(TestSuite.java:250)&#13;
+	at org.eclipse.jdt.internal.junit.runner.junit3.JUnit3TestReference.run(JUnit3TestReference.java:131)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)&#13;
+&#13;
+</failure>
+    </testcase>
+    <testcase name="testPesquisa" classname="btree.TestaArvore" time="0.0">
+      <error>java.lang.NullPointerException&#13;
+	at btree.BTreeImpl.busca2(BTreeImpl.java:39)&#13;
+	at btree.BTreeImpl.busca2(BTreeImpl.java:39)&#13;
+	at btree.BTreeImpl.buscar(BTreeImpl.java:21)&#13;
+	at btree.TestaArvore.testPesquisa(TestaArvore.java:189)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at junit.framework.TestCase.runTest(TestCase.java:176)&#13;
+	at junit.framework.TestCase.runBare(TestCase.java:141)&#13;
+	at junit.framework.TestResult$1.protect(TestResult.java:122)&#13;
+	at junit.framework.TestResult.runProtected(TestResult.java:142)&#13;
+	at junit.framework.TestResult.run(TestResult.java:125)&#13;
+	at junit.framework.TestCase.run(TestCase.java:129)&#13;
+	at junit.framework.TestSuite.runTest(TestSuite.java:255)&#13;
+	at junit.framework.TestSuite.run(TestSuite.java:250)&#13;
+	at org.eclipse.jdt.internal.junit.runner.junit3.JUnit3TestReference.run(JUnit3TestReference.java:131)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)&#13;
+&#13;
+</error>
+    </testcase>
+    <testcase name="testBtreeVazia" classname="btree.TestaArvore" time="0.0">
+      <failure>
+        <expected>P[ ] </expected>
+        <actual>btree.BTreeImpl@54b8cdc</actual>junit.framework.ComparisonFailure: expected:&lt;[P[ ] ]&gt; but was:&lt;[btree.BTreeImpl@54b8cdc]&gt;&#13;
+	at junit.framework.Assert.assertEquals(Assert.java:100)&#13;
+	at junit.framework.Assert.assertEquals(Assert.java:107)&#13;
+	at junit.framework.TestCase.assertEquals(TestCase.java:269)&#13;
+	at btree.TestaArvore.testBtreeVazia(TestaArvore.java:21)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)&#13;
+	at java.lang.reflect.Method.invoke(Unknown Source)&#13;
+	at junit.framework.TestCase.runTest(TestCase.java:176)&#13;
+	at junit.framework.TestCase.runBare(TestCase.java:141)&#13;
+	at junit.framework.TestResult$1.protect(TestResult.java:122)&#13;
+	at junit.framework.TestResult.runProtected(TestResult.java:142)&#13;
+	at junit.framework.TestResult.run(TestResult.java:125)&#13;
+	at junit.framework.TestCase.run(TestCase.java:129)&#13;
+	at junit.framework.TestSuite.runTest(TestSuite.java:255)&#13;
+	at junit.framework.TestSuite.run(TestSuite.java:250)&#13;
+	at org.eclipse.jdt.internal.junit.runner.junit3.JUnit3TestReference.run(JUnit3TestReference.java:131)&#13;
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)&#13;
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)&#13;
+&#13;
+</failure>
+    </testcase>
+  </testsuite>
+</testrun>

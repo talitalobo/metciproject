@@ -1,0 +1,96 @@
+package btree;
+
+public class Node {
+		
+	/**
+	 * Chaves do nodo
+	 */
+	private int[]chaves;
+	
+	/**
+	 * Filhos do nodo
+	 */
+	private Node[]filhos;
+	
+	public Node parent;
+	
+	/**
+	 * Grau do nodo
+	 */
+	private int grau;
+	
+	/**
+	 * Numero de chaves existentes
+	 */
+	private int numeroDeChaves;
+	
+	/**
+	 * Se o nodo e uma folha
+	 */
+	private boolean folha;
+	/**
+	 * Construtor do Nodo da arvore B
+	 * @param grau o grau t da arvoreB
+	 */
+	
+	public Node(int grau){
+		this.chaves = new int[(grau * 2 - 1)];	
+		for(int i = 0 ; i < chaves.length ; i++)
+			chaves[i] = Integer.MAX_VALUE;
+		
+		this.filhos = new Node[(grau * 2 )];
+	}
+	
+	public int getNumeroDeChaves() {
+		return numeroDeChaves;
+	}
+	
+	
+	public int getChave(int indice){
+		return chaves[indice];
+	}
+
+	public boolean getFolha() {		
+		return folha;
+	}
+
+	public Node getFilho(int indice) {		
+		return filhos[indice];
+	}
+
+	public void setFolha(boolean folha) {
+		this.folha = folha;
+	}
+
+	public void setChave(int i, int chave) {
+		chaves[i] = chave;
+		
+	}
+
+	public void setFilho(int i, Node filho) {
+		if (filho!=null)
+			filho.parent = this;
+		filhos[i] = filho;
+		
+	}
+
+	public void setNumeroDeChaves(int i) {
+		numeroDeChaves = i;
+		
+	}
+	
+	public String toString() {
+		String result="P[ ";
+		for(int i=0; i<getNumeroDeChaves();i++){
+			result+=getChave(i)+" ";		
+		}
+		for(int i=0;i<getNumeroDeChaves()+1;i++){
+			if (filhos[i]!=null)
+				result+="S"+filhos[i];
+		}
+		result+="] ";
+		
+		return result;
+	} 
+	
+}

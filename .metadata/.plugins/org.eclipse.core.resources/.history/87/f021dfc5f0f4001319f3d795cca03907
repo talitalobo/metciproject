@@ -1,0 +1,190 @@
+package oe;
+
+/**
+ * Classe que representa um No de uma arvore B
+ * 
+ * @author Ana Clara Lacerda
+ * @author Helder Ronyer
+ * 
+ */
+public class BTreeNode {
+
+	private int grau;
+	private int numeroDeChaves;
+	private int[] chaves;
+	private BTreeNode[] filhos;
+	private boolean ehFolha = true;
+	private BTreeNode pai;
+
+	/**
+	 * Construtor no No da arvore B
+	 * 
+	 * @param grau
+	 *            grau do No
+	 */
+	public BTreeNode(int grau) {
+		this.grau = grau;
+		chaves = new int[2 * grau - 1];
+		filhos = new BTreeNode[2 * grau];
+	}
+
+	/**
+	 * Construtor no No ad arvore B
+	 * 
+	 * @param grau
+	 *            grau grau do No
+	 * @param chave
+	 *            primeira chave do no
+	 */
+	public BTreeNode(int grau, int chave) {
+		this.grau = grau;
+		chaves = new int[2 * grau - 1];
+		filhos = new BTreeNode[2 * grau];
+		chaves[0] = chave;
+	}
+
+	/**
+	 * Insere um valor no No, de forma ordenada
+	 * 
+	 * @param valor
+	 *            Valor a ser inserido
+	 */
+	public void inserirValor(int valor) {
+		int index = 0;
+		int valorInserido = valor;
+		while (index < numeroDeChaves) {
+			if (valorInserido != chaves[index]) {
+				if (valorInserido < chaves[index]) {
+					int temp = chaves[index];
+					chaves[index] = valorInserido;
+					valorInserido = temp;
+				}
+				index++;
+			}
+		}
+		chaves[index] = valorInserido;
+		numeroDeChaves++;
+	}
+
+	/**
+	 * ToString() da classe BTreeNode
+	 * @return - a transformacao em string da classe, no formato [chave1,chave2,...]
+	 */
+	@Override
+	public String toString() {
+		String resultado = "[";
+		
+		for (int i : chaves) {
+			if (i != 0)
+				resultado += i + ", ";
+		}
+		if (resultado.equals("["))
+			return resultado + "]";
+		return resultado.substring(0, resultado.length()-2) + "]";
+	}
+
+	/**
+	 * Adiciona um filho ao No
+	 * 
+	 * @param i
+	 *            indice onde o filho sera adicionado
+	 * @param no
+	 *            Filho que sera adicionado ao No
+	 */
+	public void adicionaFilho(int i, BTreeNode no) {
+		int contador = i;
+		BTreeNode filho = no;
+		while (contador < numeroDeChaves) {
+			BTreeNode auxiliar = filhos[contador];
+			filhos[contador] = filho;
+			filho = auxiliar;
+			contador++;
+		}
+		filhos[contador] = filho;
+	}
+
+	/**
+	 * Remove um filho de um no.
+	 * @param no - Filho a ser removido
+	 */
+	public void removeFilho(BTreeNode no){
+		for (int i = 0; i < filhos.length; i++){
+			if (filhos[i] == no){
+				filhos[i] = null;
+			}
+		}
+		
+	}
+	/** Calcula em que posicao do No a chave estah
+	 * @param valor valor a ser procurado dentro do No
+	 * @return a posciao do valor
+	 */
+	public int index(int valor) {
+		int contador = 0;
+		while (contador < numeroDeChaves && valor > chaves[contador]) {
+			contador++;
+		}
+		if (valor == chaves[contador]) {
+			return contador;
+		}
+		return -1;
+	}
+
+	/**
+	 * @return o pai do No
+	 */
+	public BTreeNode getPai() {
+		return pai;
+	}
+
+	/** Atualiza o pai do No
+	 * @param pai novo pai
+	 */
+	public void setPai(BTreeNode pai) {
+		this.pai = pai;
+	}
+
+
+	/**
+	 * @return true se o No eh folhe, false caso contrario
+	 */
+	public boolean ehFolha() {
+		return ehFolha;
+	}
+
+	/** Atualiza se o No eh folha ou nao
+	 * @param ehFolha novo boolean
+	 */
+	public void setEhFolha(boolean ehFolha) {
+		this.ehFolha = ehFolha;
+	}
+	/**
+	 * 
+	 * @return - Array contendo as chaves do nó.
+	 */
+	public int[] getChaves() {
+		return chaves;
+	}
+
+	public boolean isFull() {
+		return numeroDeChaves == chaves.length;
+	}
+
+	public BTreeNode[] getFilhos() {
+		return filhos;
+	}
+
+	public int getGrau() {
+		return grau;
+	}
+
+	public void setNumeroDeChaves(int numeroDeChaves) {
+		this.numeroDeChaves = numeroDeChaves;
+	}
+
+	public int getNumeroDeChaves() {
+		return numeroDeChaves;
+	}
+	
+
+}

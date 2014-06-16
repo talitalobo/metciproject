@@ -1,0 +1,71 @@
+package avltree;
+
+/**
+ * @author talitalm
+ * Laboratorio de Estrutura de Dados
+ * Arvores ALV
+ */
+
+public class ArvoreAVLImpl extends ArvoreBinariaImplementada 
+	implements ArvoreAVL<ArvoreData,Key> {
+	
+	ArvoreAVLImpl av = new ArvoreAVLImpl();
+
+	
+	/**
+	 * calcula o fato de balanceamento da arvore
+	 */
+	private int calculateBalance(){
+		return 0;
+	}
+	
+	/**
+	 * verifica se a arvore esta balanceada
+	 */
+	private boolean isBalanced(){
+		int indiceDireita = 0;
+		int indiceEsquerda = 0;
+		
+		if (av == null) {
+			return true;
+		} else {
+			
+		}
+		
+		return false;
+	}
+
+	/**
+	 * 
+	 */
+	private void rebalance(){
+	}
+	
+	
+	@Override
+	public void inserir(ArvoreData novoElemento) {
+		if (novoElemento == null) {
+			
+		}
+	}
+	
+	@Override
+	public void remover(Key chave) {
+	}
+
+	
+/*	Seja Y o filho a direita de X
+	Troque X por Y
+	Torne o filho a esquerda de Y o filho a direita de X*/
+	// fator de balanceamento 1 em relacao a raiz
+	private void rotacaoEsquerda(){
+		
+	}
+	
+/*	Seja Y o filho à esquerda de X
+	Troque X por Y
+	Torne o filho a direita de Y o filho a esquerda de X.*/
+	// fator de balanceamento -1 em relacao a raiz
+	private void rotacaoDireita(){
+	}
+}

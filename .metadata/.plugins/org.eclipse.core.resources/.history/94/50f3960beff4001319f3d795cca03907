@@ -1,0 +1,24 @@
+package btree;
+
+public class ArvoreB {
+	
+	private ArvoreB right;
+	private ArvoreB left; 
+	private int date;
+	
+	
+	public boolean isLeaf() {
+		return true;
+	}
+	
+	public boolean isEmpty() {
+		return true;
+	}
+
+	public int remove(int element) {
+		return element;
+	}
+	
+	
+	
+}

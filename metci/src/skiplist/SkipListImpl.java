@@ -1,0 +1,218 @@
+package skiplist;
+
+import javax.management.RuntimeErrorException;
+
+public class SkipListImpl implements SkipList {
+
+    protected SkipNode root;
+    protected int level;
+    protected int maxLevel;
+    protected double probability = 0.5;
+    private static SkipNode NIL;
+    private final int PROXIMO = 0;
+    
+    public SkipListImpl(int maxLevel, boolean useMaxLevelAsInitialLevel) {
+        if(useMaxLevelAsInitialLevel){
+            this.level = maxLevel;
+        }else{
+            this.level = 1;
+        }
+        this.maxLevel = maxLevel;
+        root = new SkipNode(Integer.MIN_VALUE, maxLevel, new Integer(Integer.MIN_VALUE));
+        NIL = new SkipNode(Integer.MAX_VALUE, 1, new Integer(Integer.MAX_VALUE));
+        connectRootToNil();
+    }
+    
+    /**
+     * Faz a ligacao inicial entre os apontadores forward do ROOT e o no NIL
+     * Caso teseja-se usando o level do ROOT igual ao maxLevel esse metodo deve
+     * conectar todos os forward. Senao o ROOT eh inicializaco com 
+     * level=1 e o metodo deve conectar apenas o forward[0].  
+     */
+    private void connectRootToNil(){
+        NIL = new SkipNode(Integer.MAX_VALUE, 1, new Integer(Integer.MAX_VALUE));
+        for ( int index = 0; index < this.level; index ++ ){
+            root.forward[index] = NIL;
+        }
+    }
+    
+    /**
+     * Metodo que gera uma altura aleatoria para ser atribuida a um novo no no metodo
+     * insert(int,Object) 
+     */
+    private int randomLevel(){
+        int nivel = 1;
+        double random = Math.random();
+       
+        while(random <= probability && nivel < maxLevel) {
+        	nivel = nivel + 1;
+        }
+        return nivel;
+    }
+    
+    @Override
+    public void insert(int key, Object newValue) {
+        int height = randomLevel();
+        insert(key, newValue, height);
+    }
+
+    /*void insert(int, Object, int height) = caso o height 
+	seja menor que o maxLevel, insere na lista. 
+	Se nao retorna um RuntimeException(“Nivel excedido”).*/
+	
+    
+    @Override
+    public void insert(int key, Object newValue, int height) {
+    	SkipNode[] up = new SkipNode[this.level]; // array dos nodos
+        SkipNode no = this.root; // estabalece o novo no como raiz
+            	
+    	if (height > this.maxLevel) {
+            throw new RuntimeException("Nivel excedido");
+        }
+        
+        for (int index = (this.level - 1); index >= PROXIMO; index-- ) {
+            while (no.forward[index].key  < key ) { // compara o no que esta variando com a chave passada
+            	no = no.forward[index];
+            }
+            up[index] = no;
+        }
+        
+        no = up[PROXIMO].forward[PROXIMO];
+        if (no.key == key ){
+        	no.satteliteData = newValue;
+        }
+        
+        else {
+            int alt = height;
+            no = new SkipNode(key, alt, newValue); //
+            if (alt > this.level){
+                for (int j = this.level; j < alt; j++ ) {
+                	no.forward[j] = NIL; // 
+                    this.root.forward[j] = no;
+                }
+                for (int k = PROXIMO; k < this.level; k++ ) {
+                	no.forward[k] = up[k].forward[k];
+                	up[k].forward[k] = no;
+                }
+                this.level = alt;
+            }
+            
+            // 
+            else{
+                for (int i = PROXIMO; i < alt; i++ ){
+                	no.forward[i] = up[i].forward[i];
+                	up[i].forward[i] = no;
+                }
+            }
+        }
+    }
+
+    
+    /*remove(int key) = remove o nó da lista 
+	se existe ou retorna uma 
+	RuntimeException(“No inexistente”) caso contrario.*/
+	
+    @Override
+    public void remove(int key) {
+        SkipNode[] up = new SkipNode[this.maxLevel];
+        SkipNode x = this.root;
+        for (int index = this.level - 1; index > -1; index--) {
+            while (x.forward[index].key < key) {
+                x = x.forward[index];
+            }
+            up[index] = x;
+        }
+        x = x.forward[PROXIMO];
+        if (x.key == key ) {
+            for (int j=0; j<this.level; j++) {
+                if (up[j].forward[j] != x) {
+                    break;
+                }
+                up[j].forward[j] = x.forward[j];
+            }
+            while (this.level > 1 && this.root.forward[this.level] == NIL) {
+                this.level--;
+            }
+        }
+        else{
+            throw new RuntimeException("No inexistente");
+        }
+    }
+
+    
+	/*int getHeight() = retorna a altura do no com 
+	o maior nivel da lista (nao o com maior chave!). 
+	O metodo deve ter a menor complexidade possivel!!!! 
+	Preciso varrer toda a lista em busca do nó 
+	com maior altura? Respondam a essa pergunta e saberao 
+			qual a complexidade desse metodo.*/
+    
+    @Override
+    public int getHeight() {
+        SkipNode no = this.root;
+        int height = getHeightAux(no);
+        return height;
+    }
+    
+    private int getHeightAux(SkipNode no) {
+    	int maxHeight = 0;
+    	
+    	int height = no.height;
+        while ( no != NIL ){
+            if ( height < no.height ) {
+                height = no.height;
+            }
+            no = no.forward[PROXIMO];
+        }
+    	return maxHeight;
+    }
+
+	
+	/*SkipNode search(int key) = retorna 
+	o no se encontrar ou uma 
+	RuntimeException(“No inexistente”) caso contrario.*/
+
+    
+    @Override
+    public SkipNode search(int key) throws RuntimeException {
+        SkipNode no = this.root;
+        for (int index = this.maxLevel - 1; index > -1; index--) {
+            while (no.forward[index].key < key ){
+            	no = no.forward[index];
+            }
+        }
+        no = no.forward[PROXIMO];
+        if (no.key == key) {
+            return no;
+        }
+        else{
+            throw new RuntimeException("No inexistente");
+        }
+    }
+
+    @Override
+    public String printSkipList() {
+        SkipNode no = this.root;
+        return printLocal(no);
+    }
+    
+    private String printLocal(SkipNode no) {
+    	String print = "";
+    	
+    	while (no != NIL ){
+            if (no == this.root ){
+                print += "<ROOT";
+            }
+            else{
+                print += " <"+no.key;
+            }
+            print += ","+no.height+">(";
+            for (int i = 0; i < no.forward.length; i++){
+                print += (no.forward[i] != null ? ( i > 0 ? "," : "" )+(no.forward[i] != NIL ? no.forward[i].key : "NIL" ) : "") ;
+            }
+            print += ")";
+            no = no.forward[0];
+        }
+    	return print;
+    }
+}

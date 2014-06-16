@@ -1,0 +1,121 @@
+package btree;
+
+public interface BTree{
+ public Result buscar(int valor);
+ 	/**
+ 	 * metodo que insere o elemento na árvore
+ 	 * @param valor valor que será inserido
+ 	 * @return o número de elementos percorridos para inserção, -1 se o elemento já existir
+ 	 */
+    public int inserir(int valor);
+
+    /**
+     * metodo que remove o valor da árvore
+     * @param valor valor que sera removido
+     * @return o número de elementos percorridos para remoção
+     */
+    public int remover(int valor);
+    
+    /**
+     * verifica se o node possui menos elementos que o necessário
+     * @param node nó que será analisado
+     * @return true se o underflow ocorrer
+     */
+    public boolean underflowChaves(Node node);
+    /**
+     * verifica se o node possui menos filhos que o necessário
+     * @param node nó que será analisado
+     * @return true se o underflow ocorrer
+     */
+    public boolean underflowFilhos(Node node);
+    
+    /**
+     * verifica se o nó está cheio
+     * @param node nó que será analisado
+     * @return true se o nór estiver cheio
+     */
+    public boolean full(Node node);
+    
+    /**
+     * recupera a raiz da árvore
+     * @return a raiz da árvore
+     */
+    public Node getRaiz();
+    /**
+     * retorna a altura da árvore
+     * @return o valor da altura
+     */
+    public int altura();
+    
+    /**
+     * verifica se node passado é uma folha
+     * @param node o nó que será analisado
+     * @return true se node for folha
+     */
+    public boolean isFolha(Node node);
+    /**
+     * verifica se node passado é a raiz
+     * @param node o nó que será analisado
+     * @return true se node for raiz
+     */
+    public boolean isRoot(Node node);
+    /**
+     * verifica se a raiz está vazia
+     * @return true se a raiz estiver vazia
+     */
+    public boolean isEmpty();
+    
+    /**
+     * retorna o Result que representa o sucessor de k na sub-árvore que tem raiz em n 
+     * @param n nó onde a busca começa [o suecessor deve ser diferente de n]
+     * @param k o valor que procurasse o sucessor
+     * @return o nó e posição do sucessor de k na árvore apartir de n
+     */
+    public Result sucessor(Node n,int k);
+    /**
+     * retorna o Result que representa o antecessor de k na sub-árvore que tem raiz em n 
+     * @param n nó onde a busca começa [o antecessor deve ser diferente de n]
+     * @param k o valor que procurasse o sucessor
+     * @return o nó e posição do antecessor de k na árvore apartir de n
+     */
+    public Result antecessor(Node n, int k);
+    /**
+     * recupera o total de elementos da árvore
+     * @return o total de elementos da árvore
+     */
+    public int getNumeroElementos();
+    
+    /**
+     * redistribui os elementos do nó com seu irmao se possível
+     * @param node nó que será redistribuido
+     * @return se foi possivel realizar a redistribução
+     */
+    public boolean redistribute(Node node);
+    /**
+     * concatena o nó com seu irmao e pai
+     * @param node nó que sera concatenado
+     */
+    public void concatenate(Node node);
+    /**
+     * retorna o numero de chaves de um nó
+     * @param node nó que será analisado
+     * @return o numero de chaves do nó
+     */
+    public int getNumeroDeChaves(Node node);
+    /**
+     * retorna o número de filhos do nó
+     * @param node nó que será analisado
+     * @return o número de filhos de node
+     */
+    public int getNumeroDeFilhos(Node node);
+    
+    public class Result{
+		Node n;
+		int p;
+
+		Result(Node n, int p){
+			this.n= n;
+			this.p=p;
+		}
+	}
+}

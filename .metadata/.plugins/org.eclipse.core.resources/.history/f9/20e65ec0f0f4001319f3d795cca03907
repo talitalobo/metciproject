@@ -1,0 +1,222 @@
+package btree;
+
+/**
+ * 
+ * @author talitalm - 20921059 Laboratorio de Estrutura de Dados
+ */
+
+public class BTreeImpl implements BTree {
+
+	private Node raiz;
+	private int grau;
+
+	public BTreeImpl(int grau) throws Exception {
+
+		raiz = new Node(grau);
+		this.grau = grau;
+	}
+
+	@Override
+	public Result buscar(int valor) {
+		return busca2(raiz, valor);
+	}
+
+	public Result busca2(Node no, int valor){
+        int i = 1;
+        if(no != null){
+        while(i <= no.getNumeroDeChaves() && valor > no.getChave(i)){
+            i = i+1;
+        }
+        
+        if(i <= no.getNumeroDeChaves() && valor == no.getChave(i)){
+            return new Result(no, i);
+        }
+        
+        if(no.getFolha()){
+            return null;
+        }
+        }
+        return busca2(no.getFilho(i), valor);
+        
+    }
+	
+	
+	@Override
+	public int inserir(int valor) {
+		Node r = this.raiz;
+		if (r.getNumeroDeChaves() == (2 * grau) - 1) {
+			Node s = new Node(grau);
+			this.raiz = s;
+			s.setFolha(false);
+			s.setNumeroDeChaves(0);
+			s.setFilho(1, r);
+			split(s, 1, r);
+			inserirNaoCheio(s, valor);
+		} else {
+			inserirNaoCheio(r, valor);
+		}
+		return 0;
+	}
+	
+	
+	private void inserirNaoCheio(Node x, int key) {
+		int i = x.getNumeroDeChaves();
+		if (x.getFolha()) {
+			while (i >= 1 && key < x.getChave(i)) {
+				x.setChave(i + 1, x.getChave(i));
+				i = i - 1;
+			}
+			x.setChave(i + 1, key);
+			x.setNumeroDeChaves(x.getNumeroDeChaves() + 1);
+		} else {
+			while (i >= 1 && key < x.getChave(i)) {
+				i = i - 1;
+			}
+			i = i + 1;
+			if (x.getFilho(i) != null) {
+
+				if (x.getFilho(i).getNumeroDeChaves() == (2 * grau) - 1) {
+					split(x, i, x.getFilho(i));
+				}
+
+				if (key > x.getChave(i)) {
+					i = i + 1;
+				}
+				inserirNaoCheio(x.getFilho(i), key);
+			}
+		}
+	}
+
+	private void split(Node no, int i, Node filho) {
+		Node z = new Node(grau);
+		z.setFolha(filho.getFolha());
+		z.setNumeroDeChaves(grau - 1);
+
+		for (int j = 1; j <= grau - 1; j++) {
+			z.setChave(j, filho.getChave(j + grau));
+		}
+		if (!z.getFolha()) {
+			for (int j = 1; j <= grau; j++) {
+				z.setFilho(j, filho.getFilho(j + grau));
+			}
+		}
+		filho.setNumeroDeChaves(grau - 1);
+
+		for (int j = no.getNumeroDeChaves() + 1; j >= i + 1; j--) {
+			no.setFilho(j + 1, no.getFilho(j));
+		}
+		no.setFilho(i + 1, z);
+
+		for (int j = no.getNumeroDeChaves(); j >= i; j--) {
+			no.setChave(j + 1, no.getChave(j));
+		}
+		no.setChave(i, filho.getChave(grau));
+		no.setNumeroDeChaves(no.getNumeroDeChaves() + 1);
+	}
+
+	@Override
+	public int remover(int valor) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean underflowChaves(Node node) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean underflowFilhos(Node node) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean full(Node node) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Node getRaiz() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int altura() {
+		 int altura = 0;
+		 
+	        Node aux = raiz.getFilho(0);
+	        if(this.isEmpty())
+	            return 0;
+	        while(aux != null){
+	            altura += 1;
+	            aux = aux.getFilho(0);
+	        }
+	        return altura;
+	}
+
+	@Override
+	public boolean isFolha(Node node) {
+		return node.getFolha();
+	}
+
+	@Override
+	public boolean isRoot(Node node) {
+		return node.equals(getRaiz());
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return getNumeroElementos() == 0;
+	}
+
+	@Override
+	public Result sucessor(Node n, int k) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Result antecessor(Node n, int k) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getNumeroElementos() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean redistribute(Node node) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void concatenate(Node node) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public int getNumeroDeChaves(Node node) {
+		int counter = 0;
+		
+		if (sucessor(node, node.getChave(grau)) != null)
+			counter++;
+		
+		return counter;
+	}
+
+	@Override
+	public int getNumeroDeFilhos(Node node) {
+		int counter = 0;		
+		return counter;
+	}
+
+}

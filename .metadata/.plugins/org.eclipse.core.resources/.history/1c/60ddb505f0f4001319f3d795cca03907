@@ -1,0 +1,262 @@
+package btree;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+
+
+public class TestaArvore extends TestCase implements Test{
+
+	BTree tree2;
+	BTree tree3;
+	BTree tree6;
+	
+	protected void setUp() throws Exception {
+		tree2 = new BTreeImpl(2);
+		tree3 = new BTreeImpl(3);
+		tree6 = new BTreeImpl(6);
+		System.out.println("Iniciando processo de teste");
+	}
+	
+	public void testBtreeVazia(){
+		assertEquals("P[ ] ",tree2.toString());
+		assertEquals(true, tree2.isRoot(tree2.getRaiz()));
+		assertEquals(false, tree2.isFolha(tree2.getRaiz()));
+		assertEquals(false, tree2.underflowChaves(tree2.getRaiz()));
+		assertEquals(false, tree2.underflowFilhos(tree2.getRaiz()));
+		assertEquals(0, tree2.altura());
+		assertEquals(0, tree2.getNumeroElementos());
+	}
+	
+	public void testBtreeInsGrau3(){
+		tree3.inserir(10);
+		
+		assertEquals("P[ 10 ] ",tree3.toString());
+		assertEquals(true, tree3.isRoot(tree3.getRaiz()));
+		assertEquals(true, tree3.isFolha(tree3.getRaiz()));
+		assertEquals(false, tree3.underflowChaves(tree3.getRaiz()));
+		assertEquals(false, tree3.underflowFilhos(tree3.getRaiz()));
+		assertEquals(0, tree3.altura());
+		assertEquals(1, tree3.getNumeroElementos());
+		
+		tree3.inserir(20);
+		
+		assertEquals("P[ 10 20 ] ",tree3.toString());
+		assertEquals(true, tree3.isRoot(tree3.getRaiz()));
+		assertEquals(true, tree3.isFolha(tree3.getRaiz()));
+		assertEquals(false, tree3.underflowChaves(tree3.getRaiz()));
+		assertEquals(false, tree3.underflowFilhos(tree3.getRaiz()));
+		assertEquals(0, tree3.altura());
+		assertEquals(2, tree3.getNumeroElementos());
+		
+		tree3.inserir(30);
+		tree3.inserir(40);
+		tree3.inserir(50);
+		assertEquals("P[ 10 20 30 40 50 ] ",tree3.toString());
+		assertEquals(true, tree3.isRoot(tree3.getRaiz()));
+		assertEquals(true, tree3.isFolha(tree3.getRaiz()));
+		assertEquals(false, tree3.underflowChaves(tree3.getRaiz()));
+		assertEquals(false, tree3.underflowFilhos(tree3.getRaiz()));
+		assertEquals(0, tree3.altura());
+		assertEquals(5, tree3.getNumeroElementos());
+		
+		tree3.inserir(60);
+		assertEquals("P[ 30 SP[ 10 20 ] SP[ 40 50 60 ] ] ",tree3.toString());
+		assertEquals(false, tree3.underflowChaves(tree3.getRaiz()));
+		assertEquals(false, tree3.underflowFilhos(tree3.getRaiz()));
+		assertEquals(1, tree3.altura());
+		assertEquals(6, tree3.getNumeroElementos());
+		
+		tree3.inserir(70);
+		tree3.inserir(80);
+		tree3.inserir(90);
+		assertEquals("P[ 30 60 SP[ 10 20 ] SP[ 40 50 ] SP[ 70 80 90 ] ] ",tree3.toString());
+		assertEquals(9, tree3.getNumeroElementos());
+		
+		tree3.inserir(100);
+		tree3.inserir(101);
+		tree3.inserir(102);
+		assertEquals("P[ 30 60 90 SP[ 10 20 ] SP[ 40 50 ] SP[ 70 80 ] SP[ 100 101 102 ] ] ",tree3.toString());
+		assertEquals(1, tree3.altura());
+		assertEquals(12, tree3.getNumeroElementos());
+		
+		tree3.inserir(103);
+		tree3.inserir(104);
+		tree3.inserir(105);
+		tree3.inserir(1000);
+		tree3.inserir(0);
+		tree3.inserir(1);
+		tree3.inserir(2);
+		tree3.inserir(3);
+		tree3.inserir(4);
+		tree3.inserir(5);
+		tree3.inserir(6);
+		tree3.inserir(7);
+		tree3.inserir(8);
+		tree3.inserir(9);
+		assertEquals("P[ 60 SP[ 2 5 8 30 SP[ 0 1 ] SP[ 3 4 ] SP[ 6 7 ] SP[ 9 10 20 ] SP[ 40 50 ] ] SP[ 90 102 SP[ 70 80 ] SP[ 100 101 ] SP[ 103 104 105 1000 ] ] ] ",tree3.toString());
+		assertEquals(2, tree3.altura());
+		assertEquals(26, tree3.getNumeroElementos());
+		
+		
+		
+	}
+	
+	public void testBtreeInsGrau6(){
+		tree6.inserir(10);
+		
+		assertEquals("P[ 10 ] ",tree6.toString());
+		assertEquals(true, tree6.isRoot(tree6.getRaiz()));
+		assertEquals(true, tree6.isFolha(tree6.getRaiz()));
+		assertEquals(false, tree6.underflowChaves(tree6.getRaiz()));
+		assertEquals(false, tree6.underflowFilhos(tree6.getRaiz()));
+		assertEquals(0, tree6.altura());
+		assertEquals(1, tree6.getNumeroElementos());
+		
+		tree6.inserir(20);
+		
+		assertEquals("P[ 10 20 ] ",tree6.toString());
+		assertEquals(true, tree6.isRoot(tree6.getRaiz()));
+		assertEquals(true, tree6.isFolha(tree6.getRaiz()));
+		assertEquals(false, tree6.underflowChaves(tree6.getRaiz()));
+		assertEquals(false, tree6.underflowFilhos(tree6.getRaiz()));
+		assertEquals(0, tree6.altura());
+		assertEquals(2, tree6.getNumeroElementos());
+		
+		tree6.inserir(30);
+		tree6.inserir(40);
+		tree6.inserir(50);
+		assertEquals("P[ 10 20 30 40 50 ] ",tree6.toString());
+		assertEquals(true, tree6.isRoot(tree6.getRaiz()));
+		assertEquals(true, tree6.isFolha(tree6.getRaiz()));
+		assertEquals(false, tree6.underflowChaves(tree6.getRaiz()));
+		assertEquals(false, tree6.underflowFilhos(tree6.getRaiz()));
+		assertEquals(0, tree6.altura());
+		assertEquals(5, tree6.getNumeroElementos());
+		
+		tree6.inserir(60);
+		assertEquals("P[ 10 20 30 40 50 60 ] ",tree6.toString());
+		assertEquals(false, tree6.underflowChaves(tree6.getRaiz()));
+		assertEquals(false, tree6.underflowFilhos(tree6.getRaiz()));
+		assertEquals(0, tree6.altura());
+		assertEquals(6, tree6.getNumeroElementos());
+		
+		tree6.inserir(70);
+		tree6.inserir(80);
+		tree6.inserir(90);
+		assertEquals("P[ 10 20 30 40 50 60 70 80 90 ] ",tree6.toString());
+		assertEquals(9, tree6.getNumeroElementos());
+		
+		tree6.inserir(100);
+		tree6.inserir(101);
+		tree6.inserir(102);
+		assertEquals("P[ 60 SP[ 10 20 30 40 50 ] SP[ 70 80 90 100 101 102 ] ] ",tree6.toString());
+		assertEquals(1, tree6.altura());
+		assertEquals(12, tree6.getNumeroElementos());
+		
+		tree6.inserir(103);
+		tree6.inserir(104);
+		tree6.inserir(105);
+		tree6.inserir(1000);
+		tree6.inserir(0);
+		tree6.inserir(1);
+		tree6.inserir(2);
+		tree6.inserir(3);
+		tree6.inserir(4);
+		tree6.inserir(5);
+		tree6.inserir(6);
+		tree6.inserir(7);
+		tree6.inserir(8);
+		tree6.inserir(9);
+		assertEquals("P[ 5 60 SP[ 0 1 2 3 4 ] SP[ 6 7 8 9 10 20 30 40 50 ] SP[ 70 80 90 100 101 102 103 104 105 1000 ] ] ",tree6.toString());
+		assertEquals(1, tree6.altura());
+		assertEquals(26, tree6.getNumeroElementos());
+		
+	}
+	
+	public void testPesquisa(){
+		
+		
+		
+	}
+	
+	public void testRemBtree2(){
+		tree2.inserir(0);
+		tree2.inserir(3);
+		tree2.inserir(2);
+		tree2.inserir(1);
+		tree2.inserir(5);
+		tree2.inserir(7);
+		tree2.inserir(6);
+		tree2.inserir(9);
+		tree2.inserir(4);
+		tree2.inserir(10);
+		tree2.inserir(12);
+		tree2.inserir(11);
+		tree2.inserir(14);
+		tree2.inserir(15);
+		tree2.inserir(16);
+		
+		tree2.remover(5);
+		assertEquals("P[ 4 10 SP[ 2 SP[ 0 1 ] SP[ 3 ] ] SP[ 7 SP[ 6 ] SP[ 9 ] ] SP[ 12 SP[ 11 ] SP[ 14 15 16 ] ] ] ", tree2.toString());
+		assertEquals(2, tree2.altura());
+		assertEquals(14, tree2.getNumeroElementos());
+		
+		tree2.remover(15);
+		assertEquals("P[ 4 10 SP[ 2 SP[ 0 1 ] SP[ 3 ] ] SP[ 7 SP[ 6 ] SP[ 9 ] ] SP[ 12 SP[ 11 ] SP[ 14 16 ] ] ] ", tree2.toString());
+		assertEquals(2, tree2.altura());
+		assertEquals(13, tree2.getNumeroElementos());
+		
+		tree2.remover(11);
+		assertEquals("P[ 4 10 SP[ 2 SP[ 0 1 ] SP[ 3 ] ] SP[ 7 SP[ 6 ] SP[ 9 ] ] SP[ 14 SP[ 12 ] SP[ 16 ] ] ] ", tree2.toString());
+		assertEquals(2, tree2.altura());
+		assertEquals(12, tree2.getNumeroElementos());
+		
+		tree2.remover(12);
+		assertEquals("P[ 4 SP[ 2 SP[ 0 1 ] SP[ 3 ] ] SP[ 7 10 SP[ 6 ] SP[ 9 ] SP[ 14 16 ] ] ] ", tree2.toString());
+		assertEquals(2, tree2.altura());
+		assertEquals(11, tree2.getNumeroElementos());
+	
+		tree2.remover(4);
+		assertEquals("P[ 3 SP[ 1 SP[ 0 ] SP[ 2 ] ] SP[ 7 10 SP[ 6 ] SP[ 9 ] SP[ 14 16 ] ] ] ", tree2.toString());
+		assertEquals(2, tree2.altura());
+		assertEquals(10, tree2.getNumeroElementos());
+
+		tree2.remover(3);
+		assertEquals("P[ 7 SP[ 2 SP[ 0 1 ] SP[ 6 ] ] SP[ 10 SP[ 9 ] SP[ 14 16 ] ] ] ", tree2.toString());
+		assertEquals(2, tree2.altura());
+		assertEquals(9, tree2.getNumeroElementos());
+		
+		tree2.remover(7);
+		assertEquals("P[ 6 SP[ 1 SP[ 0 ] SP[ 2 ] ] SP[ 10 SP[ 9 ] SP[ 14 16 ] ] ] ", tree2.toString());
+		assertEquals(2, tree2.altura());
+		assertEquals(8, tree2.getNumeroElementos());
+
+		tree2.remover(6);
+		assertEquals("P[ 2 10 SP[ 0 1 ] SP[ 9 ] SP[ 14 16 ] ] ", tree2.toString());
+		assertEquals(1, tree2.altura());
+		assertEquals(7, tree2.getNumeroElementos());
+		
+		tree2.remover(6);
+		tree2.remover(2);
+		tree2.remover(1);
+		tree2.remover(10);
+		tree2.remover(14);
+		tree2.remover(9);
+		assertEquals("P[ 0 16 ] ", tree2.toString());
+		assertEquals(0, tree2.altura());
+		assertEquals(2, tree2.getNumeroElementos());
+		
+		tree2.remover(16);
+		tree2.remover(0);
+		assertEquals("P[ ] ", tree2.toString());
+		assertEquals(0, tree2.altura());
+		assertEquals(0, tree2.getNumeroElementos());
+		
+		
+	}
+	
+	
+	protected void tearDown() throws Exception {
+		System.out.println("Finalizando processo de teste");
+	}
+}

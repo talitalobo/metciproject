@@ -1,0 +1,237 @@
+package btree;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+
+public class BTreeImpl implements BTree {
+
+	private BTreeNode raiz;
+	private int grau;
+	private final int MENOR_GRAU = 2;
+
+	/**
+	 * Construtor da arvore B
+	 * 
+	 * @param grau
+	 */
+	public BTreeImpl(int grau) {
+		if (grau >= MENOR_GRAU) {
+			this.grau = grau;
+			raiz = new BTreeNode(this.grau);
+		}
+	}
+
+	@Override
+	public int buscar(int valor) {
+		if (raiz == null) {
+			return -1;
+		}
+		BTreeNode no = busca(raiz, valor);
+		return acessosDisco(no);
+	}
+
+	@Override
+	public void criaNode(int grau) {
+		if (grau >= MENOR_GRAU) {
+			raiz = new BTreeNode(grau);
+			this.grau = grau;
+		}
+	}
+
+	@Override
+	public int getQuantidadePercorridos(int valor) {
+		return elementosPercorridos(raiz, valor);
+	}
+
+	@Override
+	public int inserir(int valor) {
+		
+		if (raiz == null) {
+			criaNode(MENOR_GRAU);
+		}
+		BTreeNode r = raiz;
+		if (r.isFull()) {
+			BTreeNode novoNo = new BTreeNode(grau);
+			novoNo.setEhFolha(false);
+			novoNo.adicionaFilho(0, raiz);
+			raiz = novoNo;
+			split(novoNo, 0, r);
+			insereNaoCheio(novoNo, valor);
+		} else {
+
+			insereNaoCheio(r, valor);
+		}
+		System.out.println(percorrer(raiz));
+		return buscar(valor);
+	}
+
+	/**
+	 * Insere um valor em um no nao cheio
+	 * 
+	 * @param no
+	 *            no ao qual vai ser inserido o valor
+	 * @param chave
+	 *            chave que sera inserida
+	 */
+	private void insereNaoCheio(BTreeNode no, int chave) {
+		
+		if (no.ehFolha()) {
+			no.inserirValor(chave);
+		} else {
+			int i = no.getNumeroDeChaves() - 1;
+			// while para achar para qual filho vai descer
+			while (i > 0 && chave < no.getChaves()[i])
+				i--;
+			// caso esse filho esteja cheio, faz o split
+			if (no.getFilhos()[i].isFull()) {
+				split(no, i, no.getFilhos()[i]);
+			}
+			if (chave > no.getChaves()[i])
+				i++;
+			insereNaoCheio(no.getFilhos()[i], chave);
+		}
+		
+		if (!no.equals(raiz )&& no.isFull()){
+			split(no.getPai(),chave, no);
+		}
+		
+	}
+
+	/**
+	 * Faz o split de um no cheio, dividindo-o ao meio e colocando o valor do
+	 * meio em seu pai
+	 * 
+	 * @param pai
+	 *            pai do no cheio
+	 * @param indiceDoNoCheio
+	 *            indice do no onde sera feito o split
+	 * @param noCheio
+	 *            o no cheio
+	 */
+	public void split(BTreeNode pai, int indiceDoNoCheio, BTreeNode noCheio) {
+		
+		BTreeNode novoNo = new BTreeNode(grau);
+		int valorMedio = noCheio.getChaves()[grau / 2];
+		novoNo.setEhFolha(noCheio.ehFolha());
+		novoNo.setPai(pai);
+		noCheio.setPai(pai);
+		pai.inserirValor(valorMedio);
+		// adiciona as chaves no novoNo
+		
+		for (int j = 0; j < grau - 1; j++) {
+			novoNo.inserirValor(noCheio.getChaves()[j + grau]);
+		}
+		// se o novoNo nao eh folha, adiciona os filhos
+		if (!noCheio.ehFolha()) {
+			for (int j = 0; j < grau; j++) {
+				novoNo.adicionaFilho(j, noCheio.getFilhos()[j + grau]);
+			}
+		}
+		//atualiza o pai do no
+		for (BTreeNode no : novoNo.getFilhos()){
+			if (no !=null){
+				no.getPai().removeFilho(no);
+				no.setPai(novoNo);
+			}
+		}
+		// atualiza o numero de chaves do no que estava cheio
+		// e adiciona o novo filho no pai do antigo no cheio
+		for (int i =0; i< noCheio.getChaves().length; i++){
+			if (noCheio.getChaves()[i] >= valorMedio){
+				noCheio.getChaves()[i] = 0;
+			}
+		}
+		
+		noCheio.setNumeroDeChaves(grau - 1);
+		pai.adicionaFilho(pai.index(valorMedio) + 1, novoNo);
+		
+	}
+
+
+	/**
+	 * Metodo recursivo que procura por uma chave na arvore e calcula por
+	 * quantas chaves ele passou ate chegar a ela
+	 * 
+	 * @param no
+	 *            no de onde se iniciara a pesquisa
+	 * @param valor
+	 *            valor a ser procurado
+	 * @return o numero de elementos que foram percorridos ate chegar ao valor
+	 *         dado
+	 */
+	private int elementosPercorridos(BTreeNode no, int valor) {
+		int elementos = 0;
+		int i = 0;
+		while (i < no.getNumeroDeChaves() && valor > no.getChaves()[i]) {
+			i++;
+			elementos++;
+		}
+		if (i < no.getNumeroDeChaves() && valor == no.getChaves()[i]) {
+			return elementos;
+		}
+		if (no.ehFolha()) {
+			return -1;
+		}
+		return elementos + elementosPercorridos(no.getFilhos()[i], valor);
+	}
+
+	/**
+	 * Metodo recursivo que faz uma busca na arvore B
+	 * 
+	 * @param n
+	 *            o no de onde se inicia a pesquisa
+	 * @param valor
+	 *            valor a ser procurado
+	 * @return o no onde o valor esta, ou null caso ele nao exista
+	 */
+	private BTreeNode busca(BTreeNode n, int valor) {
+		int i = 0;
+		while (i < n.getNumeroDeChaves() && valor > n.getChaves()[i]) {
+			i++;
+		}
+		if (i < n.getNumeroDeChaves() && valor == n.getChaves()[i]) {
+			return n;
+		}
+		if (n.ehFolha()) {
+			return null;
+		}
+		return busca(n.getFilhos()[i], valor);
+	}
+
+	/**
+	 * Metodo que calula em qual nivel da arvore B um no estah
+	 * 
+	 * @param no
+	 *            no a ser pesquisado
+	 * @return o nivel do no
+	 */
+	private int acessosDisco(BTreeNode no) {
+		if (no == null) {
+			return -1;
+		}
+		int acessos = 0;
+		BTreeNode atual = no;
+		while (atual.getPai() != null) {
+			acessos++;
+			atual = atual.getPai();
+		}
+		return acessos;
+	}
+
+	
+	public String percorrer(BTreeNode n){	
+		String resultado = "";
+		if (n!= null){
+		resultado += "no: " + n + ".. pai: " + n.getPai();
+		for (BTreeNode no : n.getFilhos())
+			if (no != null)
+				resultado += "\n" + percorrer(no);
+		}
+		return resultado;
+	}
+
+	
+}
