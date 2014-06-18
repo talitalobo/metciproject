@@ -2,7 +2,7 @@ package estruturas;
 
 import java.util.HashMap;
 
-public class MapWithHashTable {
+public class MapWithHashTable implements AbstractMap{
 	private HashMap<String,String> map;
 	
 	public MapWithHashTable(){

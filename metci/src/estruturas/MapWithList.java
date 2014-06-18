@@ -3,7 +3,7 @@ package estruturas;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MapWithList {
+public class MapWithList implements AbstractMap{
     List<String> keys;
     List<String> values;
     

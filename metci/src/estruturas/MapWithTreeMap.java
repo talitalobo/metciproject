@@ -2,7 +2,7 @@ package estruturas;
 
 import java.util.TreeMap;
 
-public class MapWithTreeMap {
+public class MapWithTreeMap implements AbstractMap{
 	private TreeMap<String,String> map;
 	
 	public MapWithTreeMap(){
