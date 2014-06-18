@@ -1,0 +1,16 @@
+package util;
+
+public class FileReader {
+	
+	public static void main(String[] args) {
+		
+	}
+	
+	/**
+	 * The file must be in the pattern
+	 */
+	public void readFile(String path) {
+		
+	}
+
+}
