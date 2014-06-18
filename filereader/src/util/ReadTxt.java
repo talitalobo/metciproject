@@ -24,7 +24,7 @@ public class ReadTxt {
 	/**
 	 * 
 	 * @param file
-	 * /home/talita/git/metci/metciproject/data/dicionario.txt
+	 * ex: /home/talita/git/metci/metciproject/data/dicionario.txt
 	 */
 	private static void readFile(File file) {
 
