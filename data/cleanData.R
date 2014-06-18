@@ -1,5 +1,5 @@
 # ingles americano, britanico, portugues, frances, italiano, espanhol
 
-write.table(final, file="database.txt", fileEncoding="UTF-8")
+dados = read.table("database.txt", encoding="UTF-8", header=F)
+write.table(database,"database.txt",row.names=F,col.names=F,sep="\t", quote=F)
 
-espanhol = read.table("UKACD17/palabras.txt", encoding="UTF-8")
