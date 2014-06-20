@@ -16,31 +16,31 @@ public class Main {
 	private static final String LIST_MAP = "lista";
 	private static final String TREE_MAP = "tree";
 	private static final String HASH_MAP = "hash";
-	
-	public static void main(String[] args){
+
+	public static void main(String[] args) {
 		type_dict = args[0];
 		path_datas = args[1];
 		path_queries = args[2];
-		
-		if(type_dict.toLowerCase().equals(LIST_MAP)){
+
+		if (type_dict.toLowerCase().equals(LIST_MAP)) {
 			AbstractMap mapList = new MapWithList();
 			carregarDados(path_datas, mapList);
 			fazerConsultas(path_queries, mapList);
-		}else if(type_dict.toLowerCase().equals(TREE_MAP)){
+		} else if (type_dict.toLowerCase().equals(TREE_MAP)) {
 			AbstractMap mapTree = new MapWithTreeMap();
 			carregarDados(path_datas, mapTree);
-			fazerConsultas(path_queries, mapTree);			
-		}else if(type_dict.toLowerCase().equals(HASH_MAP)){
-			AbstractMap mapHash =  new MapWithHashTable();
+			fazerConsultas(path_queries, mapTree);
+		} else if (type_dict.toLowerCase().equals(HASH_MAP)) {
+			AbstractMap mapHash = new MapWithHashTable();
 			carregarDados(path_datas, mapHash);
 			fazerConsultas(path_queries, mapHash);
-		}else{
+		} else {
 			System.out.println("Tipos de dicionarios: lista, tree ou hash");
 		}
 	}
-	
-	private static void carregarDados(String path_datas, AbstractMap map){
-		
+
+	private static void carregarDados(String path_datas, AbstractMap map) {
+
 		try {
 			BufferedReader in = new BufferedReader(new FileReader(path_datas));
 			String str;
@@ -49,19 +49,18 @@ public class Main {
 				map.insert(str.trim().toLowerCase());
 			}
 			in.close();
-			} catch (IOException e) {
-				System.out.println("Algo errado com o endereco do dados a serem carregados");
-			}catch(Exception e){
-				
-			}
+		} catch (IOException e) {
+			System.out
+					.println("Algo errado com o endereco do dados a serem carregados");
+		} catch (Exception e) {
 
-			
+		}
 	}
-	
-	private static String fazerConsultas(String path_queries, AbstractMap map){
+
+	private static String fazerConsultas(String path_queries, AbstractMap map) {
 		String result = "";
 		return result;
-		
+
 	}
 
 }
