@@ -1,8 +1,10 @@
 package main;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,8 @@ public class Main {
 	private static final String LIST_MAP = "lista";
 	private static final String TREE_MAP = "tree";
 	private static final String HASH_MAP = "hash";
+	private static long tempoCarga;
+	private static long tempoConsulta;
 
 	public static void main(String[] args) {
 		type_dict = args[0];
@@ -48,10 +52,14 @@ public class Main {
 			
 			System.out.print("tempo_de_carga : ");
 			System.out.println(dps - antes);
+			tempoCarga = dps - antes;
 			System.out.print("tempo_da_consulta : ");
 			System.out.print(depois - ants);	
-			
+			tempoConsulta = depois - ants;
 		}
+		
+		// long max = Runtime.getRuntime().maxMemory();
+		// long free = Runtime.getRuntime().freeMemory();
 	}
 	
 	private static List<String> readData(String path){
@@ -92,8 +100,13 @@ public class Main {
 		}catch (Exception e) {
             System.out.println("Algo errado com as queries");
 		}
-
 		return result;
 	}
-
+	
+	private static void salvarArquivo(String nomeArquivo) throws FileNotFoundException {
+		PrintWriter saida = new PrintWriter(nomeArquivo);
+		
+		
+		saida.println("texto");
+	}
 }
