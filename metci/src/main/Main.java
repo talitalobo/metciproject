@@ -22,8 +22,10 @@ public class Main {
 	private static final String HASH_MAP = "hash";
 	private static long tempoCarga;
 	private static long tempoConsulta;
-
-	public static void main(String[] args) {
+	private static PrintWriter saida;
+	
+	
+	public static void main(String[] args) {		
 		type_dict = args[0];
 		path_datas = args[1];
 		path_queries = args[2];
@@ -40,6 +42,7 @@ public class Main {
 		} else {
 			System.out.println("Tipos de dicionarios: lista, tree ou hash");
 		}
+		
 		long antes, dps, ants, depois;
 		if( map != null){
 			antes = System.currentTimeMillis();
@@ -47,7 +50,7 @@ public class Main {
 			dps = System.currentTimeMillis();
 			
 			ants = System.currentTimeMillis();
-			System.out.println(fazerConsultas(queries, map));
+			//System.out.println(fazerConsultas(queries, map));
 			depois = System.currentTimeMillis();
 			
 			System.out.print("tempo_de_carga : ");
@@ -62,7 +65,7 @@ public class Main {
 		// long free = Runtime.getRuntime().freeMemory();
 	}
 	
-	private static List<String> readData(String path){
+	private static List<String> readData(String path) {
 		List<String> list = new ArrayList<String>();
 		try {
 			BufferedReader in = new BufferedReader(new FileReader(path));
@@ -91,22 +94,19 @@ public class Main {
 		} 
 	}
 
-	private static String fazerConsultas(List<String> queries, AbstractMap map) {
+	private static String fazerConsultas(List<String> queries, AbstractMap map, String nomeArquivo) throws FileNotFoundException {
+		
+		saida = new PrintWriter(nomeArquivo);
+		
 		String result = "";
 		try{
 			for (String query : queries) {
 				result += map.exists(query.trim().toLowerCase())? query + ": S\n": query + ": N\n";
+				saida.println(result);
 			}
 		}catch (Exception e) {
             System.out.println("Algo errado com as queries");
 		}
 		return result;
-	}
-	
-	private static void salvarArquivo(String nomeArquivo) throws FileNotFoundException {
-		PrintWriter saida = new PrintWriter(nomeArquivo);
-		
-		
-		saida.println("texto");
 	}
 }
