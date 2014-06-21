@@ -3,6 +3,8 @@ package main;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import estruturas.AbstractMap;
 import estruturas.MapWithHashTable;
@@ -21,46 +23,66 @@ public class Main {
 		type_dict = args[0];
 		path_datas = args[1];
 		path_queries = args[2];
-
+		List<String> database = readData(path_datas);
+		List<String> queries = readData(path_queries);
+		AbstractMap map = null;
+		
 		if (type_dict.toLowerCase().equals(LIST_MAP)) {
-			AbstractMap mapList = new MapWithList();
-			carregarDados(path_datas, mapList);
-			fazerConsultas(path_queries, mapList);
+			map = new MapWithList();
 		} else if (type_dict.toLowerCase().equals(TREE_MAP)) {
-			AbstractMap mapTree = new MapWithTreeMap();
-			carregarDados(path_datas, mapTree);
-			fazerConsultas(path_queries, mapTree);
+			map = new MapWithTreeMap();
 		} else if (type_dict.toLowerCase().equals(HASH_MAP)) {
-			AbstractMap mapHash = new MapWithHashTable();
-			carregarDados(path_datas, mapHash);
-			fazerConsultas(path_queries, mapHash);
+			map = new MapWithHashTable();
 		} else {
 			System.out.println("Tipos de dicionarios: lista, tree ou hash");
 		}
+		
+		if( map != null){
+			carregarDados(database, map);
+			System.out.println(fazerConsultas(queries, map));
+		}
 	}
-
-	private static void carregarDados(String path_datas, AbstractMap map) {
-
+	
+	private static List<String> readData(String path){
+		List<String> list = new ArrayList<String>();
 		try {
-			BufferedReader in = new BufferedReader(new FileReader(path_datas));
+			BufferedReader in = new BufferedReader(new FileReader(path));
 			String str;
 			while (in.ready()) {
 				str = in.readLine();
-				map.insert(str.trim().toLowerCase());
+				list.add(str.trim().toLowerCase());
 			}
 			in.close();
 		} catch (IOException e) {
-			System.out
-					.println("Algo errado com o endereco do dados a serem carregados");
+			System.out.println(e.getMessage());
+			System.out.println("Algo errado com o endereco do dados a serem carregados");
 		} catch (Exception e) {
-
 		}
+		
+		return list;
 	}
 
-	private static String fazerConsultas(String path_queries, AbstractMap map) {
-		String result = "";
-		return result;
+	private static void carregarDados(List<String> database, AbstractMap map) {
+		try{
+			for (String data : database) {
+				map.insert(data.trim().toLowerCase());
+			}
+		} catch (Exception e) {
+			System.out.println("Algo errado");
+		} 
+	}
 
+	private static String fazerConsultas(List<String> queries, AbstractMap map) {
+		String result = "";
+		try{
+			for (String query : queries) {
+				result += map.exists(query.trim().toLowerCase())? query + ": S\n": query + ": N\n";
+			}
+		}catch (Exception e) {
+            System.out.println("Algo errado com as queries");
+		}
+
+		return result;
 	}
 
 }

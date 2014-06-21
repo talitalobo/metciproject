@@ -21,4 +21,9 @@ public class MapWithHashTable implements AbstractMap{
 		return map.containsKey(key);
 	}
 
+	@Override
+	public int size() {
+		return map.size();
+	}
+
 }

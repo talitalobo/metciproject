@@ -21,4 +21,8 @@ public class MapWithList implements AbstractMap{
     	return keys.contains(key);
     	
     }
+    
+    public int size(){
+    	return keys.size();
+    }
 }
