@@ -22,10 +22,13 @@ public class Main {
 	private static final String HASH_MAP = "hash";
 	private static long tempoCarga;
 	private static long tempoConsulta;
-	private static PrintWriter saida;
+	private static String nomeArquivo;
 	
 	
-	public static void main(String[] args) {		
+	public static void main(String[] args) throws FileNotFoundException {		
+		
+		PrintWriter saida = new PrintWriter(nomeArquivo);
+		
 		type_dict = args[0];
 		path_datas = args[1];
 		path_queries = args[2];
@@ -50,15 +53,20 @@ public class Main {
 			dps = System.currentTimeMillis();
 			
 			ants = System.currentTimeMillis();
-			//System.out.println(fazerConsultas(queries, map));
-			depois = System.currentTimeMillis();
+			System.out.println(fazerConsultas(queries, map));
 			
+			saida.println(fazerConsultas(queries, map));
+			
+			depois = System.currentTimeMillis();
 			System.out.print("tempo_de_carga : ");
 			System.out.println(dps - antes);
 			tempoCarga = dps - antes;
 			System.out.print("tempo_da_consulta : ");
 			System.out.print(depois - ants);	
 			tempoConsulta = depois - ants;
+			
+			saida.println("Tempo de Carga: " + tempoCarga + "\n");
+			saida.println("Tempo de Consulta: " + tempoConsulta + "\n");
 		}
 		
 		// long max = Runtime.getRuntime().maxMemory();
@@ -94,15 +102,12 @@ public class Main {
 		} 
 	}
 
-	private static String fazerConsultas(List<String> queries, AbstractMap map, String nomeArquivo) throws FileNotFoundException {
-		
-		saida = new PrintWriter(nomeArquivo);
+	private static String fazerConsultas(List<String> queries, AbstractMap map) throws FileNotFoundException {
 		
 		String result = "";
 		try{
 			for (String query : queries) {
 				result += map.exists(query.trim().toLowerCase())? query + ": S\n": query + ": N\n";
-				saida.println(result);
 			}
 		}catch (Exception e) {
             System.out.println("Algo errado com as queries");
