@@ -23,11 +23,12 @@ public class Main {
 	private static long tempoCarga;
 	private static long tempoConsulta;
 	private static String nomeArquivo;
+	private static PrintWriter saida;
 	
 	
 	public static void main(String[] args) throws FileNotFoundException {		
 		
-		PrintWriter saida = new PrintWriter(nomeArquivo);
+		saida = new PrintWriter(nomeArquivo);
 		
 		type_dict = args[0];
 		path_datas = args[1];
