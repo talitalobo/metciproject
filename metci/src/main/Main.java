@@ -36,10 +36,21 @@ public class Main {
 		} else {
 			System.out.println("Tipos de dicionarios: lista, tree ou hash");
 		}
-		
+		long antes, dps, ants, depois;
 		if( map != null){
+			antes = System.currentTimeMillis();
 			carregarDados(database, map);
+			dps = System.currentTimeMillis();
+			
+			ants = System.currentTimeMillis();
 			System.out.println(fazerConsultas(queries, map));
+			depois = System.currentTimeMillis();
+			
+			System.out.print("tempo_de_carga : ");
+			System.out.println(dps - antes);
+			System.out.print("tempo_da_consulta : ");
+			System.out.print(depois - ants);	
+			
 		}
 	}
 	
