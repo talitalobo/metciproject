@@ -72,6 +72,7 @@ public class Main {
 		
 		// long max = Runtime.getRuntime().maxMemory();
 		// long free = Runtime.getRuntime().freeMemory();
+		//saida.println("Consumo de Memória: " + tempoConsulta + "\n");
 	}
 	
 	private static List<String> readData(String path) {
